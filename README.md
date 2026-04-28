@@ -22,7 +22,7 @@ A two-stage transfer-learning pipeline:
 | Stage | Goal | Dataset | Method | Result |
 |-------|------|---------|--------|--------|
 | **A — Phoneme Adaptation** | Teach the model Cebuano phonemes | 2,204 isolated CV/CVC syllables | LoRA (rank 8) on text-encoder attention + FFN | 46% loss reduction (34.2 → 18.55 over 24 epochs) |
-| **B — Prosody Fine-tuning** | Teach natural sentence-level rhythm | 657 full sentences (Bloom Cebuano corpus) | Full fine-tune from Stage A checkpoint | In progress |
+| **B — Prosody Fine-tuning** | Teach natural sentence-level rhythm | 657 full sentences (Bloom Cebuano corpus) | Full fine-tune from Stage A checkpoint | Completed; better MCD than full fine-tune, but lower perceptual quality due to limited dataset coverage |
 
 LoRA adapters follow `ΔW = (α/r) · B · A` and are injected into:
 - Text-encoder attention: `conv_q`, `conv_k`, `conv_v`
@@ -30,7 +30,13 @@ LoRA adapters follow `ΔW = (α/r) · B · A` and are injected into:
 
 The base architecture is **VITS** (Variational Inference Text-to-Speech) — a single-stage end-to-end TTS model that combines a flow-based decoder with an adversarial training objective.
 
-This public demo ships the **Stage A + LoRA** checkpoint.
+### Why this demo deploys Stage A (not Stage B)
+
+Both stages were trained and evaluated. Stage B achieved **better MCD (Mel-Cepstral Distortion) scores than the full fine-tune baseline**, but during listening tests we found that the **Stage A checkpoint is more audible and intelligible** to native Cebuano speakers. The 657-sentence Bloom corpus used for Stage B turned out to be too narrow in domain and prosodic variety to outperform Stage A perceptually, despite the favorable objective metric.
+
+This is consistent with a known limitation in TTS evaluation: objective metrics like MCD do not always track human-perceived quality, particularly in low-resource settings where distribution mismatch between training and inference text dominates the error budget. We document this finding in detail in the thesis manuscript.
+
+This public demo therefore ships the **Stage A + LoRA** checkpoint.
 
 ## Setup
 
