@@ -600,7 +600,7 @@ def create_app():
                 audio_output = gr.Audio(label="Generated Speech", type="numpy")
 
         gr.Examples(
-            examples=[[s, "VITS Stage B + LoRA"] for s in EXAMPLE_SENTENCES],
+            examples=[[s, "VITS Stage A + LoRA"] for s in EXAMPLE_SENTENCES],
             inputs=[text_input, model_dropdown],
             outputs=audio_output,
             fn=tts_handler,
