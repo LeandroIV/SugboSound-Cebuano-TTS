@@ -1,0 +1,41 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Virtual environments (do NOT commit) ---
+venv/
+laptop/
+env/
+.env
+.venv/
+
+# --- Model weights (downloaded from Hugging Face on first run) ---
+models/
+
+# --- Nested working copy (legacy, not part of the deployment) ---
+sugbosound-cebuano-tts/
+
+# --- Gradio / HF caches ---
+.gradio/
+gradio_cached_examples/
+flagged/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Build / logs ---
+build/
+dist/
+*.log
